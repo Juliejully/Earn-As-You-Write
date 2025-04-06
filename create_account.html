@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Account - Earn As You Write</title>
-    <meta name="description" content="Register for legitimate online writing and transcription jobs with instant Mpesa payments.">
+    <meta name="description" content="Register for legitimate online writing and transcription jobs with instant Mpesa payments. Choose your account type and start earning today!">
     <meta name="keywords" content="online writing jobs, transcription jobs, earn money online, writing opportunities, Mpesa payments">
     <meta name="author" content="Earn As You Write">
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * {
             box-sizing: border-box;
@@ -24,7 +27,7 @@
             display: flex;
             justify-content: center;
             gap: 30px;
-            background: #0275d8;
+            background: linear-gradient(135deg, #0275d8, #025aa5);
             padding: 15px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
@@ -35,10 +38,11 @@
             font-weight: 600;
             padding: 8px 16px;
             border-radius: 5px;
-            transition: background 0.3s;
+            transition: background 0.3s, transform 0.2s;
         }
         .navbar a:hover {
             background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
         }
         .container {
             width: 90%;
@@ -48,6 +52,10 @@
             padding: 30px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             border-radius: 12px;
+            transition: transform 0.3s;
+        }
+        .container:hover {
+            transform: translateY(-5px);
         }
         h2 {
             color: #0275d8;
@@ -56,6 +64,17 @@
             margin-bottom: 30px;
             text-transform: uppercase;
             letter-spacing: 1px;
+            position: relative;
+        }
+        h2::after {
+            content: "";
+            width: 50px;
+            height: 3px;
+            background: #0275d8;
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
         }
         .form-group {
             margin-bottom: 20px;
@@ -66,17 +85,21 @@
             margin-bottom: 8px;
             color: #555;
         }
-        input {
+        input, select {
             width: 100%;
             padding: 12px;
             border: 1px solid #ddd;
             border-radius: 5px;
             font-size: 14px;
-            transition: border-color 0.3s;
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
-        input:focus {
+        input:focus, select:focus {
             border-color: #0275d8;
+            box-shadow: 0 0 5px rgba(2, 117, 216, 0.3);
             outline: none;
+        }
+        input:invalid:focus {
+            border-color: #dc3545;
         }
         .cta {
             display: block;
@@ -93,10 +116,12 @@
             font-size: 18px;
             font-weight: 600;
             border: none;
-            transition: background 0.3s;
+            box-shadow: 0 4px 10px rgba(2, 117, 216, 0.3);
+            transition: background 0.3s, transform 0.2s;
         }
         .cta:hover {
             background: #025aa5;
+            transform: scale(1.05);
         }
         .popup-overlay {
             display: none;
@@ -123,8 +148,9 @@
             width: 90%;
             max-width: 400px;
         }
-        .popup img {
-            width: 60px;
+        .popup i {
+            font-size: 40px;
+            color: #28a745;
             margin-bottom: 15px;
         }
         .popup h3 {
@@ -152,10 +178,24 @@
         .footer {
             text-align: center;
             padding: 20px;
-            background: #333;
+            background: linear-gradient(135deg, #333, #444);
             color: white;
             margin-top: 40px;
             font-size: 14px;
+            border-top: 4px solid #0275d8;
+        }
+        @media (max-width: 600px) {
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .container {
+                padding: 20px;
+            }
+            .cta {
+                font-size: 16px;
+                padding: 12px;
+            }
         }
     </style>
 </head>
@@ -171,26 +211,34 @@
     <form id="registrationForm">
         <div class="form-group">
             <label for="fullName">Full Name:</label>
-            <input type="text" id="fullName" required>
+            <input type="text" id="fullName" required placeholder="e.g., John Doe">
         </div>
         <div class="form-group">
             <label for="email">Email Address:</label>
-            <input type="email" id="email" required>
+            <input type="email" id="email" required placeholder="e.g., john.doe@example.com">
+        </div>
+        <div class="form-group">
+            <label for="accountType">Account Type:</label>
+            <select id="accountType" required>
+                <option value="" disabled selected>Select an account type</option>
+                <option value="basic">Basic (KSh 500 - Refundable Training Fee)</option>
+                <option value="premium">Premium (KSh 800 - Refundable Training Fee)</option>
+            </select>
         </div>
         <div class="form-group">
             <label for="mpesaCode">Mpesa Transaction Code:</label>
-            <input type="text" id="mpesaCode" required>
+            <input type="text" id="mpesaCode" required pattern="[A-Za-z0-9]{10}" placeholder="e.g., QJ12345678" title="Enter a valid 10-character Mpesa code">
         </div>
-        <button type="submit" class="cta">Submit</button>
+        <button type="submit" class="cta">Submit Registration</button>
     </form>
 </div>
 
 <!-- Popup and Overlay -->
 <div class="popup-overlay" id="popupOverlay" onclick="closePopup()"></div>
 <div id="popup" class="popup">
-    <img src="https://cdn-icons-png.flaticon.com/512/845/845646.png" alt="Success">
+    <i class="fas fa-check-circle"></i>
     <h3>Welcome, <span id="displayName"></span>!</h3>
-    <p>Congratulations on taking the first step! Your payment is being processed, and your first task will soon land in <span id="displayEmail"></span>. Get ready to earn and shine with us!</p>
+    <p id="popupMessage">Congratulations on joining with a <span id="displayAccountType"></span> account! Your payment of <span id="displayFee"></span> is being processed, and your first task will soon land in <span id="displayEmail"></span>. This refundable training fee will be returned after your first task—get ready to earn!</p>
     <button onclick="closePopup()">OK</button>
 </div>
 
@@ -202,15 +250,29 @@
         
         const fullName = document.getElementById("fullName").value.trim();
         const email = document.getElementById("email").value.trim();
+        const accountType = document.getElementById("accountType").value;
         const mpesaCode = document.getElementById("mpesaCode").value.trim();
 
-        if (fullName && email && mpesaCode) {
+        // Validate Mpesa code format (10 characters, alphanumeric)
+        const mpesaCodeRegex = /^[A-Za-z0-9]{10}$/;
+        if (!mpesaCodeRegex.test(mpesaCode)) {
+            alert("Please enter a valid 10-character Mpesa transaction code.");
+            return;
+        }
+
+        if (fullName && email && accountType && mpesaCode) {
+            // Determine fee based on account type
+            const fee = accountType === "basic" ? "KSh 500" : "KSh 800";
+            const accountLabel = accountType === "basic" ? "Basic" : "Premium";
+
             // Simulate registration processing
-            console.log(`Registration successful for ${fullName} with email ${email} and Mpesa code ${mpesaCode}`);
+            console.log(`Registration successful for ${fullName} with email ${email}, account type ${accountLabel}, and Mpesa code ${mpesaCode}`);
 
             // Update popup with personalized message
             document.getElementById("displayName").textContent = fullName;
             document.getElementById("displayEmail").textContent = email;
+            document.getElementById("displayAccountType").textContent = accountLabel;
+            document.getElementById("displayFee").textContent = fee;
             
             // Show popup
             document.getElementById("popup").style.display = "block";
@@ -219,7 +281,7 @@
             // Reset form
             document.getElementById("registrationForm").reset();
         } else {
-            alert("Please fill in all fields.");
+            alert("Please fill in all fields correctly.");
         }
     });
 
